@@ -1,4 +1,6 @@
 pub type Result<T, E = anyhow::Error> = anyhow::Result<T, E>;
-pub type Puzzle = (fn(&String) -> Result<String>, &'static str);
+pub type Puzzle = (fn(&str) -> Result<String>, &'static str);
 
-pub const PUZZLES: [Puzzle; 0] = [];
+mod puzzle_1;
+
+pub const PUZZLES: [Puzzle; 1] = [puzzle_1::PUZZLE];

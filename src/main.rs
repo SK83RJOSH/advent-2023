@@ -17,11 +17,11 @@ struct Args {
 fn main() -> puzzles::Result<()> {
     let args = Args::parse();
 
-    match PUZZLES.get(args.day) {
+    match PUZZLES.get(args.day - 1) {
         Some((function, default)) => {
             let input = args.input.unwrap_or(default.to_string());
             let output = function(&input)?;
-            println!("{output}");
+            print!("{output}");
             Ok(())
         }
         None => Err(anyhow!("invalid day: {:?}", args.day)),
