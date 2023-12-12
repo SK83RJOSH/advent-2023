@@ -12,7 +12,7 @@ pub const PUZZLE: PuzzleEntry = (
 const RADIX: usize = 10;
 const NUMERIC_DIGITS: [&str; RADIX] = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
-pub fn puzzle_part_1(input: &str) -> Result<String> {
+fn puzzle_part_1(input: &str) -> Result<String> {
     let result: Result<usize> = input
         .lines()
         .map(|l| {
@@ -34,11 +34,11 @@ pub fn puzzle_part_1(input: &str) -> Result<String> {
     Ok(result?.to_string())
 }
 
-pub const ALPHABETIC_DIGITS: [&str; RADIX] = [
+const ALPHABETIC_DIGITS: [&str; RADIX] = [
     "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
 ];
 
-pub fn puzzle_part_2(input: &str) -> Result<String> {
+fn puzzle_part_2(input: &str) -> Result<String> {
     let group = NUMERIC_DIGITS
         .iter()
         .chain(ALPHABETIC_DIGITS.iter())
