@@ -9,7 +9,8 @@ pub const PUZZLE: PuzzleEntry = (
     include_str!("puzzle_1.txt"),
 );
 
-pub const NUMERIC_DIGITS: [&str; 10] = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+const RADIX: usize = 10;
+const NUMERIC_DIGITS: [&str; RADIX] = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
 pub fn puzzle_part_1(input: &str) -> Result<String> {
     let result: Result<usize> = input
@@ -24,7 +25,7 @@ pub fn puzzle_part_1(input: &str) -> Result<String> {
                             .position(|&m| m == format!("{c}"))
                             .ok_or(anyhow!("character was not a digit: {:?}", c))
                     };
-                    Ok(as_digit(a)? * 10 + as_digit(b)?)
+                    Ok(as_digit(a)? * RADIX + as_digit(b)?)
                 }
                 (_, _) => Err(anyhow!("line does not any digits: {:?}", l)),
             }
@@ -33,7 +34,7 @@ pub fn puzzle_part_1(input: &str) -> Result<String> {
     Ok(result?.to_string() + "\n")
 }
 
-pub const ALPHABETIC_DIGITS: [&str; 10] = [
+pub const ALPHABETIC_DIGITS: [&str; RADIX] = [
     "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
 ];
 
@@ -48,10 +49,10 @@ pub fn puzzle_part_2(input: &str) -> Result<String> {
         .map(|l| {
             let digits = ac
                 .find_overlapping_iter(l)
-                .map(|m| m.pattern().as_usize() % 10)
+                .map(|m| m.pattern().as_usize() % RADIX)
                 .collect_vec();
             match (digits.first(), digits.last()) {
-                (Some(a), Some(b)) => Ok(a * 10 + b),
+                (Some(a), Some(b)) => Ok(a * RADIX + b),
                 (_, _) => Err(anyhow!("line does not any digits: {:?}", l)),
             }
         })
