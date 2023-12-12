@@ -12,8 +12,8 @@ pub const PUZZLE: PuzzleEntry = (
 const RADIX: usize = 10;
 const NUMERIC_DIGITS: [&str; RADIX] = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
-fn puzzle_part_1(input: &str) -> Result<String> {
-    let result: Result<usize> = input
+fn puzzle_part_1(input: &str) -> Result<usize> {
+    input
         .lines()
         .map(|l| {
             let digits = l.chars().filter(char::is_ascii_digit).collect_vec();
@@ -30,21 +30,20 @@ fn puzzle_part_1(input: &str) -> Result<String> {
                 (_, _) => Err(anyhow!("line does not contain any digits: {:?}", l)),
             }
         })
-        .sum();
-    Ok(result?.to_string())
+        .sum()
 }
 
 const ALPHABETIC_DIGITS: [&str; RADIX] = [
     "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine",
 ];
 
-fn puzzle_part_2(input: &str) -> Result<String> {
+fn puzzle_part_2(input: &str) -> Result<usize> {
     let group = NUMERIC_DIGITS
         .iter()
         .chain(ALPHABETIC_DIGITS.iter())
         .collect_vec();
     let ac = AhoCorasick::new(group)?;
-    let result: Result<usize> = input
+    input
         .lines()
         .map(|l| {
             let digits = ac
@@ -56,6 +55,5 @@ fn puzzle_part_2(input: &str) -> Result<String> {
                 (_, _) => Err(anyhow!("line does not contain any digits: {:?}", l)),
             }
         })
-        .sum();
-    Ok(result?.to_string())
+        .sum()
 }

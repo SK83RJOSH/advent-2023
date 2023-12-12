@@ -1,5 +1,5 @@
 pub type Result<T, E = anyhow::Error> = anyhow::Result<T, E>;
-pub type Puzzle = fn(&str) -> Result<String>;
+pub type Puzzle = fn(&str) -> Result<usize>;
 pub type PuzzleEntry = (&'static [Puzzle], &'static str);
 
 mod puzzle_1;
