@@ -1,4 +1,4 @@
-use anyhow::anyhow;
+use anyhow::Context;
 use clap::Parser;
 
 use puzzles::PUZZLES;
@@ -19,17 +19,14 @@ struct Args {
 
 fn main() -> puzzles::Result<()> {
     let args = Args::parse();
-
-    match PUZZLES.get(args.day - 1) {
-        Some((functions, default)) => match functions.get(args.part - 1) {
-            Some(function) => {
-                let input = args.input.unwrap_or(default.to_string());
-                let output = function(&input)?;
-                println!("{output}");
-                Ok(())
-            }
-            None => Err(anyhow!("invalid part: {:?}", args.part)),
-        },
-        None => Err(anyhow!("invalid day: {:?}", args.day)),
-    }
+    let (functions, default) = PUZZLES
+        .get(args.day - 1)
+        .context(format!("invalid day: {:?}", args.day))?;
+    let function = functions
+        .get(args.part - 1)
+        .context(format!("invalid part: {:?}", args.part))?;
+    let input = args.input.unwrap_or(default.to_string());
+    let output = function(&input)?;
+    println!("{output}");
+    Ok(())
 }
