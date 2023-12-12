@@ -31,7 +31,7 @@ pub fn puzzle_part_1(input: &str) -> Result<String> {
             }
         })
         .sum();
-    Ok(result?.to_string() + "\n")
+    Ok(result?.to_string())
 }
 
 pub const ALPHABETIC_DIGITS: [&str; RADIX] = [
