@@ -25,7 +25,7 @@ fn main() -> puzzles::Result<()> {
             Some(function) => {
                 let input = args.input.unwrap_or(default.to_string());
                 let output = function(&input)?;
-                print!("{output}");
+                println!("{output}");
                 Ok(())
             }
             None => Err(anyhow!("invalid part: {:?}", args.part)),
