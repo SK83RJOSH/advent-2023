@@ -1,9 +1,9 @@
 use anyhow::anyhow;
 use itertools::Itertools;
 
-pub use super::{Puzzle, Result};
+pub use super::{PuzzleEntry, Result};
 
-pub const PUZZLE: Puzzle = (puzzle, include_str!("puzzle_1.txt"));
+pub const PUZZLE: PuzzleEntry = (&[puzzle], include_str!("puzzle_1.txt"));
 
 pub fn puzzle(input: &str) -> Result<String> {
     let lines: Result<Vec<u32>> = input
