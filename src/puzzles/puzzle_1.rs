@@ -27,7 +27,7 @@ pub fn puzzle_part_1(input: &str) -> Result<String> {
                     };
                     Ok(as_digit(a)? * RADIX + as_digit(b)?)
                 }
-                (_, _) => Err(anyhow!("line does not any digits: {:?}", l)),
+                (_, _) => Err(anyhow!("line does not contain any digits: {:?}", l)),
             }
         })
         .sum();
@@ -53,7 +53,7 @@ pub fn puzzle_part_2(input: &str) -> Result<String> {
                 .collect_vec();
             match (digits.first(), digits.last()) {
                 (Some(a), Some(b)) => Ok(a * RADIX + b),
-                (_, _) => Err(anyhow!("line does not any digits: {:?}", l)),
+                (_, _) => Err(anyhow!("line does not contain any digits: {:?}", l)),
             }
         })
         .sum();
