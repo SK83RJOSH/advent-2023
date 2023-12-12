@@ -5,7 +5,10 @@ use itertools::Itertools;
 
 pub use super::{PuzzleEntry, Result};
 
-pub const PUZZLE: PuzzleEntry = (&[puzzle_part_1], include_str!("puzzle_2.txt"));
+pub const PUZZLE: PuzzleEntry = (
+    &[puzzle_part_1, puzzle_part_2],
+    include_str!("puzzle_2.txt"),
+);
 
 #[inline(always)]
 const fn cube3(red: usize, green: usize, blue: usize) -> Cube3 {
@@ -37,6 +40,11 @@ impl Cube3 {
     #[inline(always)]
     pub fn contains(&self, rhs: Self) -> bool {
         self.red >= rhs.red && self.green >= rhs.green && self.blue >= rhs.blue
+    }
+
+    #[inline(always)]
+    pub fn power(&self) -> usize {
+        self.red * self.green * self.blue
     }
 }
 
@@ -74,9 +82,8 @@ fn split_pair(input: &str, pattern: char) -> Result<[&str; 2]> {
     }
 }
 
-const CUBE_COUNT: Cube3 = cube3(12, 13, 14);
-
 fn puzzle_part_1(input: &str) -> Result<usize> {
+    const CUBE_COUNT: Cube3 = cube3(12, 13, 14);
     input
         .lines()
         .map(|line| -> Result<_> {
@@ -95,5 +102,22 @@ fn puzzle_part_1(input: &str) -> Result<usize> {
             Ok((game, results))
         })
         .filter_map_ok(|(game, mut results)| results.all(|v| v.is_ok_and(|v| v)).then_some(game))
+        .sum()
+}
+
+fn puzzle_part_2(input: &str) -> Result<usize> {
+    input
+        .lines()
+        .map(|line| -> Result<_> {
+            let [_, turns] = split_pair(line.trim_start_matches("Game "), ':')?;
+            let mut result = cube3(0, 0, 0);
+            for value in turns.split([';', ',']) {
+                let [count, color] = split_pair(value.trim(), ' ')?;
+                let count: usize = count.parse()?;
+                let index = Cube3::index(color)?;
+                result[index] = result[index].max(count);
+            }
+            Ok(result.power())
+        })
         .sum()
 }

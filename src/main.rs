@@ -7,10 +7,10 @@ mod puzzles;
 
 #[derive(Parser, Debug)]
 struct Args {
-    #[arg(short, long, default_value_t = 1)]
+    #[arg(short, long, default_value_t = 2)]
     day: usize,
 
-    #[arg(short, long, default_value_t = 1)]
+    #[arg(short, long, default_value_t = 2)]
     part: usize,
 
     #[arg(short, long)]
